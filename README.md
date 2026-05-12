@@ -39,7 +39,7 @@ npm install
 npm run dev
 ```
 
-Then open [http://localhost:5173](http://localhost:5173).
+Then open [here](https://ryanair-eosin.vercel.app/).
 
 ---
 
@@ -61,4 +61,3 @@ This project is not affiliated with or endorsed by Ryanair Holdings plc. All dat
 
 ---
 
-Built by [Luke Carroll](https://github.com/lukecarroll15)
