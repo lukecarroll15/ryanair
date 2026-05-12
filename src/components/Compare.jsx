@@ -129,6 +129,12 @@ export default function Compare() {
         <span className="text-gray-500 text-xs ml-auto">% change shown from {yearA} → {yearB}</span>
       </div>
 
+      {yearA === yearB && (
+        <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl px-5 py-3 text-yellow-400 text-sm">
+          Select two different years to see a comparison.
+        </div>
+      )}
+
       {/* Sections */}
       <div className="space-y-4">
         {SECTIONS.map(section => (

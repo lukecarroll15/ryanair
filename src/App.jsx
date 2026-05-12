@@ -7,10 +7,10 @@ import BalanceSheet from './components/BalanceSheet'
 import CashFlow from './components/CashFlow'
 import Operations from './components/Operations'
 import Compare from './components/Compare'
-import Stock from './components/Stock'
 import DataTable from './components/DataTable'
 import Insights from './components/Insights'
-import Fuel from './components/Fuel'
+import ErrorBoundary from './components/ErrorBoundary'
+import { incomeData } from './data'
 
 const TABS = [
   { id: 'overview', label: 'Overview', Component: Overview },
@@ -21,18 +21,19 @@ const TABS = [
   { id: 'cashflow', label: 'Cash Flow', Component: CashFlow },
   { id: 'operations', label: 'Operations', Component: Operations },
   { id: 'compare', label: 'Compare Years', Component: Compare },
-  { id: 'stock', label: 'Stock Price', Component: Stock },
   { id: 'datatable', label: 'Data Table', Component: DataTable },
   { id: 'insights', label: 'Insights', Component: Insights },
-  { id: 'fuel', label: 'Fuel & Oil', Component: Fuel },
 ]
+
+const firstYear = incomeData[0].year
+const lastYear = incomeData.at(-1).year
 
 export default function App() {
   const [active, setActive] = useState('overview')
   const { Component } = TABS.find(t => t.id === active)
 
   return (
-    <div className="min-h-screen bg-[#060d1a] text-white font-sans">
+    <div className="min-h-screen bg-[#060d1a] text-white font-sans flex flex-col">
       {/* Header */}
       <header className="border-b border-white/10 px-6 py-4 flex items-center gap-4">
         <div className="flex items-center gap-3">
@@ -42,32 +43,53 @@ export default function App() {
           </div>
           <div>
             <h1 className="text-white font-bold text-lg leading-none">Financial Dashboard</h1>
-            <p className="text-gray-500 text-xs mt-0.5">FY2012 – FY2025 · EUR millions · Fiscal year ends March 31</p>
+            <p className="text-gray-500 text-xs mt-0.5">{firstYear} – {lastYear} · EUR millions · Fiscal year ends March 31</p>
           </div>
         </div>
       </header>
 
       {/* Tab Navigation */}
-      <nav className="border-b border-white/10 px-6 flex gap-0 overflow-x-auto">
-        {TABS.map(({ id, label }) => (
-          <button
-            key={id}
-            onClick={() => setActive(id)}
-            className={`px-4 py-3.5 text-sm font-medium whitespace-nowrap transition-colors border-b-2 -mb-px ${
-              active === id
-                ? 'text-[#FFB703] border-[#FFB703]'
-                : 'text-gray-400 border-transparent hover:text-gray-200'
-            }`}
-          >
-            {label}
-          </button>
-        ))}
-      </nav>
+      <div className="relative border-b border-white/10">
+        {/* Right scroll fade */}
+        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#060d1a] to-transparent z-10" />
+        <nav
+          className="px-6 flex gap-0 overflow-x-auto"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {TABS.map(({ id, label }) => (
+            <button
+              key={id}
+              onClick={() => setActive(id)}
+              className={`px-4 py-3.5 text-sm font-medium whitespace-nowrap transition-colors border-b-2 -mb-px ${
+                active === id
+                  ? 'text-[#FFB703] border-[#FFB703]'
+                  : 'text-gray-400 border-transparent hover:text-gray-200'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </nav>
+      </div>
 
       {/* Content */}
-      <main className="px-6 py-6 max-w-7xl mx-auto">
-        <Component />
+      <main className="px-6 py-6 max-w-7xl mx-auto w-full flex-1">
+        <ErrorBoundary key={active}>
+          <Component />
+        </ErrorBoundary>
       </main>
+
+      {/* Footer */}
+      <footer className="border-t border-white/10 px-6 py-5 mt-8">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row gap-2 sm:gap-6 items-start sm:items-center justify-between">
+          <div className="text-gray-600 text-xs space-y-1">
+            <p>Data sourced from <a href="https://investor.ryanair.com/results-centre/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-300 underline transition-colors">Ryanair Annual Reports</a> · {firstYear}–{lastYear}</p>
+            <p>Not affiliated with or endorsed by Ryanair Holdings plc</p>
+          </div>
+          <div className="text-gray-600 text-xs text-right">
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

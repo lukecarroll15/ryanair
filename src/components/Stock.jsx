@@ -1,120 +1,76 @@
-import { useState, useEffect } from 'react'
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
-  Tooltip, ResponsiveContainer, ReferenceLine, Cell,
+  Tooltip, ResponsiveContainer, Cell,
 } from 'recharts'
 import { incomeData, balanceData, fmtM } from '../data'
 import ChartCard from './ChartCard'
 import ChartTooltip from './Tooltip'
 import Correlation from './Correlation'
+import stockRaw from '../../ryanair_stock_prices.json'
 
-// RYA.IR = Ryanair on Euronext Dublin, priced in EUR
-// Request goes through the Vite proxy → no CORS
-const TICKER = 'RYA.IR'
-const API = `/yahoo/v8/finance/chart/${TICKER}?interval=1mo&range=15y`
-
-function usePriceData() {
-  const [monthly, setMonthly] = useState(null)
-  const [error, setError] = useState(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    fetch(API)
-      .then(r => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`)
-        return r.json()
-      })
-      .then(json => {
-        const result = json?.chart?.result?.[0]
-        if (!result) throw new Error('No data returned')
-        const timestamps = result.timestamp
-        const closes = result.indicators.quote[0].close
-        const parsed = timestamps
-          .map((ts, i) => ({
-            ts,
-            date: new Date(ts * 1000),
-            label: new Date(ts * 1000).toLocaleDateString('en-GB', { month: 'short', year: '2-digit' }),
-            price: closes[i] != null ? +closes[i].toFixed(2) : null,
-          }))
-          .filter(d => d.price !== null)
-        setMonthly(parsed)
-      })
-      .catch(err => setError(err.message))
-      .finally(() => setLoading(false))
-  }, [])
-
-  return { monthly, error, loading }
+function parseMonthly() {
+  return stockRaw.data
+    .map(d => {
+      const [year, month] = d.date.split('-').map(Number)
+      const date = new Date(year, month - 1, 1)
+      return {
+        date,
+        label: date.toLocaleDateString('en-GB', { month: 'short', year: '2-digit' }),
+        price: d.close != null ? +d.close.toFixed(2) : null,
+      }
+    })
+    .filter(d => d.price !== null)
 }
+
+const monthly = parseMonthly()
 
 // Find the March closing price for a given fiscal year (e.g. FY2025 = March 2025)
-function marchPrice(monthly, fyLabel) {
+function marchPrice(fyLabel) {
   const fyYear = parseInt(fyLabel.replace('FY', ''))
-  return monthly?.find(p => p.date.getFullYear() === fyYear && p.date.getMonth() === 2) ?? null
+  return monthly.find(p => p.date.getFullYear() === fyYear && p.date.getMonth() === 2) ?? null
 }
 
-function buildAnnualData(monthly) {
+function buildAnnualData() {
   return incomeData.map((d, i) => {
-    const mp = marchPrice(monthly, d.year)
+    const mp = marchPrice(d.year)
     const sharesM = balanceData[i].sharesMillions
     const price = mp?.price ?? null
     const pe = price != null && d.eps > 0 ? +(price / d.eps).toFixed(1) : null
-    // Market cap: price (EUR) × shares (millions) → EUR billions
     const mcap = price != null && sharesM != null ? +(price * sharesM / 1000).toFixed(2) : null
     return { year: d.year, price, eps: d.eps, pe, mcap, sharesM }
   })
 }
 
+const annual = buildAnnualData()
+
 const fmtPrice = v => v == null ? '—' : `€${v.toFixed(2)}`
 const fmtPE = v => v == null ? '—' : `${v.toFixed(1)}x`
 const fmtBn = v => v == null ? '—' : `€${v.toFixed(1)}B`
 
+const fetchedDate = new Date(stockRaw.fetched).toLocaleDateString('en-GB', {
+  day: 'numeric', month: 'short', year: 'numeric',
+})
+
 export default function Stock() {
-  const { monthly, error, loading } = usePriceData()
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64 text-gray-400">
-        <div className="text-center space-y-2">
-          <div className="w-6 h-6 border-2 border-[#FFB703] border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="text-sm">Fetching {TICKER} price history…</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="bg-[#0d1b2e] border border-red-500/30 rounded-xl p-8 text-center max-w-md">
-          <p className="text-red-400 font-semibold mb-2">Could not load price data</p>
-          <p className="text-gray-400 text-sm mb-3">{error}</p>
-          <p className="text-gray-500 text-xs">Yahoo Finance blocked the request (CORS). Try opening the app via a local server, or check your network.</p>
-        </div>
-      </div>
-    )
-  }
-
-  const annual = buildAnnualData(monthly)
-  const latestPrice = monthly?.at(-1)
+  const latestPrice = monthly.at(-1)
 
   return (
     <div className="space-y-6">
       {/* Header strip */}
       <div className="bg-[#0d1b2e] border border-white/10 rounded-xl p-5 flex flex-wrap gap-6 items-center">
         <div>
-          <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">Ryanair Holdings · {TICKER}</p>
+          <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">Ryanair Holdings · {stockRaw.ticker}</p>
           <p className="text-3xl font-bold text-white">{fmtPrice(latestPrice?.price)}</p>
           <p className="text-gray-500 text-xs mt-1">Last close · Euronext Dublin · EUR</p>
         </div>
-        {latestPrice && (
-          <div className="text-gray-500 text-xs ml-auto">
-            Data via Yahoo Finance · {latestPrice.date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
-          </div>
-        )}
+        <div className="text-gray-500 text-xs ml-auto text-right">
+          <p>Data via Yahoo Finance · {stockRaw.ticker}</p>
+          <p className="mt-0.5">Snapshot as of {fetchedDate}</p>
+        </div>
       </div>
 
       {/* Monthly price chart */}
-      <ChartCard title="Share Price History" subtitle={`${TICKER} monthly closing price · EUR`}>
+      <ChartCard title="Share Price History" subtitle={`${stockRaw.ticker} monthly closing price · EUR`}>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={monthly} margin={{ top: 5, right: 10, bottom: 0, left: 10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
