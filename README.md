@@ -1,8 +1,8 @@
 # Ryanair Financial Dashboard
 
-An interactive data visualisation of Ryanair's financial performance across 14 fiscal years (FY2012–FY2025), built with React and Recharts.
+An interactive data visualisation of Ryanair's financial performance across 15 fiscal years (FY2012–FY2026), built with React and Recharts.
 
-**Live site:** _add your deployment URL here_
+**Live site:** [ryanair-dashboard.vercel.app](https://ryanair-dashboard.vercel.app/)
 
 ---
 
@@ -39,7 +39,7 @@ npm install
 npm run dev
 ```
 
-Then open [here](https://ryanair-eosin.vercel.app/).
+Then open [http://localhost:5173](http://localhost:5173).
 
 ---
 
@@ -50,8 +50,6 @@ Financial data is sourced from Ryanair's published annual reports and results an
 All figures are in EUR millions unless otherwise stated. Fiscal years end 31 March.
 
 **Note on comparability:** From FY2019 onwards, balance sheet figures reflect IFRS 16 lease accounting (aircraft operating leases capitalised as right-of-use assets and lease liabilities). Pre-FY2019 figures are not directly comparable on those line items.
-
-Stock price data sourced from Yahoo Finance (RYA.IR, Euronext Dublin).
 
 ---
 
