@@ -37,11 +37,13 @@ export default function App() {
       {/* Header */}
       <header className="border-b border-white/10 px-6 py-4 flex items-center gap-4">
         <div className="flex items-center gap-3">
-          <div className="bg-[#073590] rounded-lg px-2.5 py-1.5">
-            <span className="text-[#FFB703] font-black text-sm tracking-tight">RYAN</span>
-            <span className="text-white font-black text-sm tracking-tight">AIR</span>
+          <div className="bg-[#0d1b2e] border border-white/10 rounded-lg w-10 h-10 flex items-center justify-center shrink-0">
+            <svg viewBox="0 0 24 24" className="w-6 h-6 rotate-45" aria-hidden="true">
+              <path fill="#FFB703" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
+            </svg>
           </div>
           <div>
+            <p className="text-gray-400 text-xs font-medium leading-none mb-1">Ryanair</p>
             <h1 className="text-white font-bold text-lg leading-none">Financial Dashboard</h1>
             <p className="text-gray-500 text-xs mt-0.5">{firstYear} – {lastYear} · EUR millions · Fiscal year ends March 31</p>
           </div>
