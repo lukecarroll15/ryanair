@@ -74,6 +74,10 @@ export const latest = {
   balance: balanceData.at(-1),
 }
 
+export const firstYear = incomeData[0].year
+export const latestYear = incomeData.at(-1).year
+export const prevYear = incomeData.at(-2).year
+
 // Formatters
 export const fmtM = n => {
   if (n == null) return 'N/A'

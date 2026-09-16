@@ -4,7 +4,7 @@ import {
   Legend, ReferenceLine, Cell,
 } from 'recharts'
 import oilData from '../../ryanair_oil_prices.json'
-import { incomeData, operatingData } from '../data'
+import { incomeData, operatingData, latestYear } from '../data'
 import ChartCard from './ChartCard'
 import ChartTooltip from './Tooltip'
 
@@ -75,10 +75,10 @@ export default function Fuel() {
       {/* Stat strip */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: 'Brent FY2025 avg',    value: `$${fyBrent['FY2025']}/bbl`,  sub: 'USD per barrel' },
-          { label: 'Ryanair cost FY2025', value: `€${operatingData.at(-1).fuelCost}/gal`, sub: 'EUR per US gallon' },
-          { label: 'Fuel % of revenue',   value: `${combined.at(-1).fuelPctRev}%`, sub: 'FY2025' },
-          { label: 'Fuel % of expenses',  value: `${combined.at(-1).fuelPctExp}%`, sub: 'FY2025' },
+          { label: `Brent ${latestYear} avg`,    value: fyBrent[latestYear] != null ? `$${fyBrent[latestYear]}/bbl` : 'N/A',  sub: 'USD per barrel' },
+          { label: `Ryanair cost ${latestYear}`, value: `€${operatingData.at(-1).fuelCost}/gal`, sub: 'EUR per US gallon' },
+          { label: 'Fuel % of revenue',   value: `${combined.at(-1).fuelPctRev}%`, sub: latestYear },
+          { label: 'Fuel % of expenses',  value: `${combined.at(-1).fuelPctExp}%`, sub: latestYear },
         ].map(({ label, value, sub }) => (
           <div key={label} className="bg-[#0d1b2e] border border-white/10 rounded-xl p-5">
             <p className="text-gray-400 text-xs uppercase tracking-widest mb-2">{label}</p>

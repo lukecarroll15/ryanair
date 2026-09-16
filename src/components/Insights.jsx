@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { incomeData, balanceData, cashFlowData, operatingData } from '../data'
+import { incomeData, balanceData, cashFlowData, operatingData, firstYear, latestYear } from '../data'
 
 const YEARS = incomeData.map(d => d.year)
 
@@ -95,7 +95,7 @@ function buildRecords() {
 const cagr = (start, end, n) => ((end / start) ** (1 / n) - 1) * 100
 
 const CAGRS = (() => {
-  const n = YEARS.length - 1 // 13 years
+  const n = YEARS.length - 1
   const first = byYear[YEARS[0]]
   const last  = byYear[YEARS.at(-1)]
   return [
@@ -143,7 +143,7 @@ export default function Insights() {
 
       {/* CAGR */}
       <div>
-        <h2 className="text-white font-semibold text-sm mb-3">Long-Run Growth  <span className="text-gray-500 font-normal">FY2012 → FY2025 compound annual growth rate</span></h2>
+        <h2 className="text-white font-semibold text-sm mb-3">Long-Run Growth  <span className="text-gray-500 font-normal">{firstYear} → {latestYear} compound annual growth rate</span></h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           {CAGRS.map(c => (
             <div key={c.label} className="bg-[#0d1b2e] border border-white/10 rounded-xl p-4 text-center">

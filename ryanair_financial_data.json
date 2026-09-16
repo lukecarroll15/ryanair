@@ -3,7 +3,7 @@
     "company": "Ryanair Holdings plc",
     "currency": "EUR_millions",
     "fiscal_year_end": "March 31",
-    "years_covered": ["fy2012", "fy2013", "fy2014", "fy2015", "fy2016", "fy2017", "fy2018", "fy2019", "fy2020", "fy2021", "fy2022", "fy2023", "fy2024", "fy2025"],
+    "years_covered": ["fy2012", "fy2013", "fy2014", "fy2015", "fy2016", "fy2017", "fy2018", "fy2019", "fy2020", "fy2021", "fy2022", "fy2023", "fy2024", "fy2025", "fy2026"],
     "notes": {
       "eps": "All EPS values normalised to euros. Pre-FY2018 values were originally reported in euro cents and have been divided by 100.",
       "staff": "Staff/Team Members field normalised to staff_at_period_end throughout.",
@@ -443,6 +443,36 @@
       "diluted_eps_euros": 1.4549,
       "weighted_avg_shares_millions": 1101.5,
       "diluted_shares_millions": 1107.7
+    },
+    "fy2026": {
+      "scheduled_revenues": 10556.0,
+      "ancillary_revenues": 4988.3,
+      "total_operating_revenues": 15544.3,
+      "operating_expenses": {
+        "fuel_and_oil": 5418.6,
+        "staff_costs": 1856.5,
+        "airport_and_handling_charges": 1762.3,
+        "route_charges": 1318.2,
+        "depreciation": 1373.4,
+        "marketing_distribution_other": 888.5,
+        "maintenance_materials_repairs": 552.6,
+        "aircraft_rentals": 0.0,
+        "total_operating_expenses": 13170.1
+      },
+      "operating_profit": 2374.2,
+      "other_income_expense": {
+        "finance_expense": 37.8,
+        "finance_and_other_income": 117.8,
+        "foreign_exchange_gains_losses": -30.9,
+        "total_net_other_income": 49.1
+      },
+      "profit_before_tax": 2423.3,
+      "tax": 249.6,
+      "profit_for_period": 2173.7,
+      "basic_eps_euros": 2.0594,
+      "diluted_eps_euros": 2.0422,
+      "weighted_avg_shares_millions": 1055.5,
+      "diluted_shares_millions": 1064.4
     }
   },
 
@@ -558,6 +588,14 @@
       "shareholders_equity": 7036.9,
       "issued_share_capital": 6.4,
       "weighted_avg_ordinary_shares_millions": 1101.5
+    },
+    "fy2026": {
+      "cash_and_equivalents": 2733.4,
+      "total_assets": 19747.7,
+      "long_term_debt_incl_lease_obligations": 1491.5,
+      "shareholders_equity": 10101.4,
+      "issued_share_capital": 6.3,
+      "weighted_avg_ordinary_shares_millions": 1055.5
     }
   },
 
@@ -642,9 +680,15 @@
     },
     "fy2025": {
       "net_cash_from_operating": 3415.7,
-      "net_cash_from_investing": -1481.5,
+      "net_cash_from_investing": -1431.5,
       "net_cash_from_financing": -1997.0,
       "net_change_in_cash": -12.8
+    },
+    "fy2026": {
+      "net_cash_from_operating": 3694.9,
+      "net_cash_from_investing": -2612.8,
+      "net_cash_from_financing": -2200.7,
+      "net_change_in_cash": -1118.6
     }
   },
 
@@ -895,10 +939,28 @@
       "booked_passenger_load_factor_pct": 94,
       "average_sector_length_miles": 783,
       "sectors_flown": 1109300,
-      "number_of_airports_served": 239,
+      "number_of_airports_served": 228,
       "average_daily_flight_hour_utilization_hours": 9.57,
       "staff_at_period_end": 25952,
       "staff_per_aircraft_at_period_end": 42,
+      "booked_passengers_per_staff_at_period_end": null
+    },
+    "fy2026": {
+      "operating_margin_pct": 15,
+      "breakeven_load_factor_pct": 80,
+      "average_booked_passenger_fare_eur": 50.66,
+      "ancillary_revenue_per_booked_passenger_eur": 23.94,
+      "total_revenue_per_booked_passenger_eur": 74.6,
+      "cost_per_booked_passenger_eur": 63.21,
+      "average_fuel_cost_per_us_gallon_eur": 3.01,
+      "revenue_passengers_booked_millions": 208.0,
+      "booked_passenger_load_factor_pct": 94,
+      "average_sector_length_miles": 790,
+      "sectors_flown": 1151800,
+      "number_of_airports_served": 235,
+      "average_daily_flight_hour_utilization_hours": 9.48,
+      "staff_at_period_end": 25711,
+      "staff_per_aircraft_at_period_end": 40,
       "booked_passengers_per_staff_at_period_end": null
     }
   }

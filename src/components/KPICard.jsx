@@ -1,3 +1,5 @@
+import { prevYear } from '../data'
+
 export default function KPICard({ label, value, change, sub }) {
   const up = change >= 0
   return (
@@ -6,7 +8,7 @@ export default function KPICard({ label, value, change, sub }) {
       <p className="text-3xl font-bold text-white leading-none">{value}</p>
       {change !== undefined && (
         <p className={`text-sm mt-2 font-medium ${up ? 'text-emerald-400' : 'text-red-400'}`}>
-          {up ? '▲' : '▼'} {Math.abs(change).toFixed(1)}% vs FY2024
+          {up ? '▲' : '▼'} {Math.abs(change).toFixed(1)}% vs {prevYear}
         </p>
       )}
       {sub && <p className="text-gray-500 text-xs mt-1">{sub}</p>}

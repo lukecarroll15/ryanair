@@ -2,7 +2,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, Legend, ReferenceLine,
 } from 'recharts'
-import { cashFlowData, fmtM } from '../data'
+import { cashFlowData, latestYear, fmtM } from '../data'
 import ChartCard from './ChartCard'
 import ChartTooltip from './Tooltip'
 
@@ -27,9 +27,9 @@ export default function CashFlow() {
 
       <div className="grid grid-cols-3 gap-4">
         {[
-          { label: 'FY2025 Operating CF', value: fmtM(cashFlowData.at(-1).operating), color: 'text-emerald-400' },
-          { label: 'FY2025 Investing CF', value: fmtM(cashFlowData.at(-1).investing), color: 'text-red-400' },
-          { label: 'FY2025 Financing CF', value: fmtM(cashFlowData.at(-1).financing), color: 'text-violet-400' },
+          { label: `${latestYear} Operating CF`, value: fmtM(cashFlowData.at(-1).operating), color: 'text-emerald-400' },
+          { label: `${latestYear} Investing CF`, value: fmtM(cashFlowData.at(-1).investing), color: 'text-red-400' },
+          { label: `${latestYear} Financing CF`, value: fmtM(cashFlowData.at(-1).financing), color: 'text-violet-400' },
         ].map(({ label, value, color }) => (
           <div key={label} className="bg-[#0d1b2e] border border-white/10 rounded-xl p-5 text-center">
             <p className="text-gray-400 text-xs uppercase tracking-widest mb-2">{label}</p>

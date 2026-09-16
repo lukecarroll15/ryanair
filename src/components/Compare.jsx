@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { incomeData, balanceData, cashFlowData, operatingData, fmtM, fmtEur } from '../data'
+import { incomeData, balanceData, cashFlowData, operatingData, latestYear, fmtM, fmtEur } from '../data'
 
 const YEARS = incomeData.map(d => d.year)
 
@@ -113,7 +113,7 @@ function YearSelect({ value, onChange, exclude }) {
 
 export default function Compare() {
   const [yearA, setYearA] = useState('FY2019')
-  const [yearB, setYearB] = useState('FY2025')
+  const [yearB, setYearB] = useState(latestYear)
 
   const a = getYear(yearA)
   const b = getYear(yearB)

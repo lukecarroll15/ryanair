@@ -2,7 +2,7 @@ import {
   BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, Legend, PieChart, Pie, Cell,
 } from 'recharts'
-import { incomeData, fmtM } from '../data'
+import { incomeData, latestYear, fmtM } from '../data'
 import ChartCard from './ChartCard'
 import ChartTooltip from './Tooltip'
 
@@ -71,7 +71,7 @@ export default function Expenses() {
           </ResponsiveContainer>
         </ChartCard>
 
-        <ChartCard title={`FY2025 Expense Mix`} subtitle="By category — latest year">
+        <ChartCard title={`${latestYear} Expense Mix`} subtitle="By category — latest year">
           <ResponsiveContainer width="100%" height={260}>
             <PieChart>
               <Pie data={pieData} cx="50%" cy="50%" innerRadius={60} outerRadius={100} dataKey="value" nameKey="name" paddingAngle={2}>
